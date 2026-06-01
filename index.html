@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -17,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        :root { --primary: #0f766e; --secondary: #0d9488; --dark: #134e4a; --success: #10B981; --danger: #EF4444; --warning: #F59E0B; --glass: rgba(255, 255, 255, 0.95); }
+        :root { --primary: #0f766e; --secondary: #0d9488; --dark: #134e4a; --success: #10B981; --danger: #EF4444; --warning: #F59E0B; --gold: #d97706; --glass: rgba(255, 255, 255, 0.95); }
         body { font-family: 'Tajawal', sans-serif; background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
         
         .main-container { background: var(--glass); border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); width: 100%; max-width: 1100px; padding: 20px; position: relative; overflow: hidden; }
@@ -171,7 +172,6 @@
 
             <!-- المطبعة -->
             <div id="tab-print" class="tab-content">
-                <!-- شروط المطبعة حرفياً -->
                 <div class="card" style="background: #fffbeb; border: 1px solid #fef3c7; padding: 12px;">
                     <h4 style="margin: 0 0 8px 0; color: #b45309; font-size:14px;"><i class="fas fa-info-circle"></i> ملاحظات مطبعة الاسطورة:</h4>
                     <ul style="margin: 0; padding-right: 15px; font-size: 12px; color: #92400e; line-height: 1.5;">
@@ -342,7 +342,7 @@
                             name: nameInput, department: selectedDept, avatar: "👨‍🎓", gownType: "", gownSize: "", sashName: "", backSashPhrase: "", capPhrase: "", capPos: "", guestsCount: 0, 
                             isGownDelivered: false, gownPrice: 0, eventsPrice: 0, totalPrice: 0, paidAmount: 0, payments: [], joinedEvents: [], timestamp: firebase.firestore.FieldValue.serverTimestamp()
                         });
-                        currentStudentId = newDoc.id; currentStudentData = { name: nameInput, department: selectedDept, avatar: "👨‍🎓", joinedEvents: [], isGownDelivered: false }; 
+                        currentStudentId = newDoc.id; currentStudentData = { name: nameInput, department: selectedDept, avatar: "👨‍🎓", eventsPrice: 0, totalPrice: 0, joinedEvents: [], isGownDelivered: false }; 
                         askForGown(newDoc.id);
                         fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(`👤 طالب جديد (2027)\nالاسم: ${nameInput}\nالقسم: ${selectedDept}`)}`);
                     }
@@ -377,8 +377,12 @@
             document.getElementById('tl-2').classList.toggle('active', !!d.gownType);
             document.getElementById('tl-3').classList.toggle('active', !!d.isGownDelivered);
             
-            let gPrice = d.gownPrice || (d.totalPrice || 0); let ePrice = d.eventsPrice || 0; let total = gPrice + ePrice;
-            let paid = d.paidAmount || 0; let remain = total - paid;
+            // الخوارزمية المصححة للحسابات
+            let total = d.totalPrice || 0; 
+            let ePrice = d.eventsPrice || 0; 
+            let gPrice = total - ePrice; // استخراج سعر الزي الصافي بدون أخطاء تكرار
+            let paid = d.paidAmount || 0; 
+            let remain = total - paid;
             
             document.getElementById('stGownPrice').innerText = gPrice; document.getElementById('stEventsPrice').innerText = ePrice;
             document.getElementById('stTotal').innerText = total; document.getElementById('stPaid').innerText = paid; document.getElementById('stRemain').innerText = remain;
@@ -392,7 +396,7 @@
             
             document.getElementById('pSize').value = d.gownSize || ""; 
             document.getElementById('pSash').value = d.sashName || ""; 
-            document.getElementById('pBackSash').value = d.backSashPhrase || ""; // العبارة الجديدة للظهر
+            document.getElementById('pBackSash').value = d.backSashPhrase || ""; 
             document.getElementById('pCapPhrase').value = d.capPhrase || ""; 
             document.getElementById('pGuests').value = d.guestsCount || "";
             if(d.capPos) { let rad = document.querySelector(`input[name="capPos"][value="${d.capPos}"]`); if(rad) rad.checked = true; }
@@ -441,20 +445,17 @@
             if(!currentStudentId) return;
             let size = document.getElementById('pSize').value; 
             let sash = document.getElementById('pSash').value.trim(); 
-            let backSash = document.getElementById('pBackSash').value.trim(); // قراءة العبارة الجديدة
+            let backSash = document.getElementById('pBackSash').value.trim(); 
             let guests = parseInt(document.getElementById('pGuests').value) || 0;
             let phrase = document.getElementById('pCapPhrase').value.trim(); 
             let capPos = document.querySelector('input[name="capPos"]:checked').value;
 
-            // القيد فقط على الاسم الأمامي للوشاح
             if(sash !== "") { let wordCount = sash.split(/\s+/).filter(w => w.length > 0).length; if (wordCount !== 3) { Swal.fire('مرفوض', 'الاسم على الوشاح 3 كلمات فقط.', 'error'); return; } }
             if(phrase !== "" && capPos === "بدون") { Swal.fire('تنبيه', 'يرجى تحديد مكان تطريز عبارة القبعة.', 'warning'); return; }
             if(phrase === "") { capPos = "بدون"; }
 
             Swal.fire({title:'حفظ...', didOpen:()=>Swal.showLoading()});
-            await db.collection("hall_B_students").doc(currentStudentId).update({ 
-                gownSize: size, sashName: sash, backSashPhrase: backSash, capPhrase: phrase, capPos: capPos, guestsCount: guests 
-            });
+            await db.collection("hall_B_students").doc(currentStudentId).update({ gownSize: size, sashName: sash, backSashPhrase: backSash, capPhrase: phrase, capPos: capPos, guestsCount: guests });
             Swal.fire('تم', 'حفظ البيانات بنجاح', 'success');
         }
 
@@ -495,14 +496,13 @@
 
                 snap.forEach((doc) => {
                     const d = doc.data(); tStudents++;
-                    let total = (d.gownPrice || d.totalPrice || 0) + (d.eventsPrice || 0); let remain = total - (d.paidAmount || 0);
+                    let total = d.totalPrice || 0; let remain = total - (d.paidAmount || 0);
                     tPaid += (d.paidAmount || 0); tRemain += remain;
                     
                     let remColor = remain === 0 ? 'var(--success)' : ((d.paidAmount||0) === 0 ? 'var(--danger)' : 'var(--warning)');
                     let deliverBtn = d.isGownDelivered ? `<button style="background:var(--success); color:white; border:none; padding:3px; border-radius:4px; font-size:10px; display:block; margin:2px auto;" onclick="toggleGown('${doc.id}', false)">مُسلّم✔️</button>` : `<button style="background:#3b82f6; color:white; border:none; padding:3px; border-radius:4px; font-size:10px; display:block; margin:2px auto;" onclick="toggleGown('${doc.id}', true)">تسليم</button>`;
 
-                    // إضافة الحقل الجديد (عبارة الظهر) لملف الإكسل
-                    allData.push({ "الاسم": d.name, "القسم": d.department||"-", "الزي": d.gownType, "القياس": d.gownSize||"-", "الاسم على الوشاح": d.sashName||"-", "عبارة ظهر الوشاح": d.backSashPhrase||"-", "عبارة القبعة": d.capPhrase||"-", "مكان العبارة": d.capPos||"-", "الكلي": total, "الواصل": d.paidAmount, "المتبقي": remain, "الضيوف": d.guestsCount||0, "استلم الزي؟": d.isGownDelivered?"نعم":"لا", "الوصولات": d.payments ? d.payments.map(p=>`${p.amount}(${p.receiver})`).join(' | ') : "" });
+                    allData.push({ "الاسم": d.name, "القسم": d.department||"-", "الزي": d.gownType, "القياس": d.gownSize||"-", "الاسم الأمامي للوشاح": d.sashName||"-", "عبارة ظهر الوشاح": d.backSashPhrase||"-", "عبارة القبعة": d.capPhrase||"-", "مكان العبارة": d.capPos||"-", "الكلي": total, "الواصل": d.paidAmount, "المتبقي": remain, "الضيوف": d.guestsCount||0, "استلم الزي؟": d.isGownDelivered?"نعم":"لا", "الوصولات": d.payments ? d.payments.map(p=>`${p.amount}(${p.receiver})`).join(' | ') : "" });
                     
                     tbody.innerHTML += `<tr>
                         <td><b>${d.name}</b><br><span style="font-size:10px; color:#666;">${d.department||""}</span></td>
@@ -551,7 +551,7 @@
             Swal.fire({ title: 'تحميل...', didOpen: () => Swal.showLoading() });
             const docRef = db.collection("hall_B_students").doc(docId); const docSnap = await docRef.get();
             if(!docSnap.exists) return; const d = docSnap.data(); 
-            let total = (d.gownPrice || d.totalPrice || 0) + (d.eventsPrice || 0); let remain = total - (d.paidAmount || 0);
+            let total = d.totalPrice || 0; let remain = total - (d.paidAmount || 0);
 
             const { value: pData } = await Swal.fire({
                 title: 'قطع وصل 🧾',
@@ -582,3 +582,6 @@
     </script>
 </body>
 </html>
+
+
+```
