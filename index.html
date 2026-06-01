@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        :root { --primary: #0f766e; --secondary: #0d9488; --dark: #134e4a; --success: #10B981; --danger: #EF4444; --warning: #F59E0B; --gold: #d97706; --glass: rgba(255, 255, 255, 0.95); }
+        :root { --primary: #0f766e; --secondary: #0d9488; --dark: #134e4a; --success: #10B981; --danger: #EF4444; --warning: #F59E0B; --glass: rgba(255, 255, 255, 0.95); }
         body { font-family: 'Tajawal', sans-serif; background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; backdrop-filter: blur(8px); }
         
         .main-container { background: var(--glass); border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); width: 100%; max-width: 1100px; padding: 20px; position: relative; overflow: hidden; }
@@ -30,13 +30,12 @@
         /* العناصر العامة المتجاوبة */
         .input-group { position: relative; width: 100%; max-width: 400px; margin: 20px auto; }
         .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 20px; }
-        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 12px 12px 12px 12px; font-size: 15px; font-family: 'Tajawal'; border: 2px solid #E5E7EB; border-radius: 10px; box-sizing: border-box; transition: 0.3s; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 12px; font-size: 15px; font-family: 'Tajawal'; border: 2px solid #E5E7EB; border-radius: 10px; box-sizing: border-box; transition: 0.3s; }
         .input-group input { padding-right: 45px; }
         input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; }
         .btn-main { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; font-family: 'Tajawal'; border-radius: 10px; cursor: pointer; transition: 0.3s; width: 100%; max-width: 400px;}
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(15, 118, 110, 0.3); }
 
-        /* التبويبات المتجاوبة */
         .tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; flex-wrap: nowrap; -webkit-overflow-scrolling: touch;}
         .tab-btn { flex: 1; min-width: max-content; padding: 10px 15px; background: #f3f4f6; border: none; border-radius: 10px; font-weight: bold; color: #666; cursor: pointer; transition: 0.3s; font-family: 'Tajawal'; font-size:14px;}
         .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.3); }
@@ -46,17 +45,25 @@
         .card { background: white; padding: 15px; border-radius: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f3f4f6; margin-bottom: 15px; position: relative;}
         .card h3 { margin-top: 0; color: var(--dark); display: flex; align-items: center; gap: 8px; font-size: 16px;}
         
-        /* بروفايل الطالب للموبايل */
         .student-profile { display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap;}
         .avatar { width: 50px; height: 50px; background: #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 25px; cursor: pointer; border: 2px solid var(--primary);}
         .student-info h2 { margin: 0; color: var(--dark); font-size: 18px;}
         .student-info p { margin: 0; color: #666; font-size: 12px;}
 
-        /* براءة الذمة */
         .clearance-card { display: none; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #fbbf24; padding: 15px; border-radius: 16px; text-align: center; margin-bottom: 15px; position: relative; overflow: hidden;}
         .clearance-card::before { content: 'وثيقة رسمية'; position: absolute; top: 10px; left: -30px; background: #b45309; color: white; font-size: 10px; padding: 2px 30px; transform: rotate(-45deg); font-weight: bold;}
 
-        /* خريطة الطريق (Timeline) متجاوبة */
+        /* شكل وصل الـ POS الاحترافي */
+        .pos-receipt { background: #fffdf7; width: 100%; max-width: 300px; margin: 0 auto 15px auto; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 1px solid #e5e7eb; position: relative; color: #333;}
+        .pos-receipt::before, .pos-receipt::after { content: ''; position: absolute; left: 0; right: 0; height: 6px; background-size: 12px 100%; }
+        .pos-receipt::before { top: -6px; background-image: radial-gradient(circle at 6px 0, transparent 6px, #fffdf7 7px); }
+        .pos-receipt::after { bottom: -6px; background-image: radial-gradient(circle at 6px 6px, transparent 6px, #fffdf7 7px); }
+        .pos-header { text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px; }
+        .pos-header i { font-size: 24px; color: var(--dark); margin-bottom: 5px; }
+        .pos-header h4 { margin: 0; font-family: 'Tajawal'; font-weight: 900; font-size: 16px;}
+        .pos-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: bold; font-family: monospace;}
+        .pos-total { font-size: 18px; font-weight: 900; border-top: 2px dashed #ccc; padding-top: 10px; margin-top: 10px; text-align: center; color: var(--success); font-family: monospace;}
+
         .timeline { display: flex; justify-content: space-between; position: relative; margin: 20px 0 10px 0; padding: 0;}
         .timeline::before { content: ''; position: absolute; top: 15px; left: 0; width: 100%; height: 3px; background: #eee; z-index: 1;}
         .tl-step { position: relative; z-index: 2; text-align: center; flex: 1;}
@@ -74,7 +81,7 @@
         .event-title { font-size: 16px; font-weight: bold; color: var(--dark); margin:0;}
         .event-price { background: var(--warning); color: white; padding: 3px 8px; border-radius: 20px; font-weight: bold; font-size:12px;}
 
-        /* الإدارة والجداول */
+        /* الإدارة */
         .admin-trigger { position: absolute; top: 10px; left: 10px; background: transparent; border: none; color: rgba(0,0,0,0.2); cursor: pointer; font-size: 20px; }
         .table-responsive { overflow-x: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); max-height: 400px; -webkit-overflow-scrolling: touch;}
         table { width: 100%; border-collapse: collapse; background: white; white-space: nowrap; font-size: 12px;}
@@ -85,6 +92,12 @@
         
         .admin-stats { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
         .stat-box { flex: 1; min-width: 90px; background: white; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #eee; }
+
+        /* أزرار الإدارة الجديدة */
+        .btn-action { padding: 4px 8px; font-size: 11px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: inherit;}
+        .btn-pay { background: var(--primary); color: white;}
+        .btn-receipts { background: var(--warning); color: white;}
+        .btn-delete-st { background: transparent; color: var(--danger); font-size: 14px;}
     </style>
 </head>
 <body>
@@ -186,6 +199,14 @@
 
                 <div class="card">
                     <div style="margin-bottom: 12px; text-align: right;">
+                        <label style="font-weight: bold; font-size: 13px; color: var(--primary);">* القسم / الكلية:</label>
+                        <select id="pDept" style="margin-top: 5px;">
+                            <option value="">-- اختر القسم --</option>
+                        </select>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+                    <div style="margin-bottom: 12px; text-align: right;">
                         <label style="font-weight: bold; font-size: 13px;">1- قياس الروب:</label>
                         <select id="pSize"><option value="">-- اختر --</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="2XL">2XL</option><option value="بدون">بدون روب</option></select>
                     </div>
@@ -218,10 +239,10 @@
                 </div>
             </div>
 
-            <!-- الوصولات -->
+            <!-- الوصولات (شكل الـ POS) -->
             <div id="tab-receipts" class="tab-content">
-                <div class="card">
-                    <h3><i class="fas fa-file-invoice-dollar"></i> الوصولات الرسمية</h3>
+                <div class="card" style="background: transparent; box-shadow: none; border: none; padding: 0;">
+                    <h3 style="margin-bottom: 15px;"><i class="fas fa-file-invoice-dollar"></i> الوصولات الرسمية</h3>
                     <div id="receiptsList"></div>
                 </div>
             </div>
@@ -259,13 +280,13 @@
 
                 <div class="table-responsive">
                     <table id="studentsTable">
-                        <thead><tr><th>الاسم (القسم)</th><th>المطلوب</th><th>الاستلام</th><th>إجراء</th></tr></thead>
+                        <thead><tr><th>الاسم (القسم)</th><th>المطلوب</th><th>إجراء</th></tr></thead>
                         <tbody id="tableBody"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- الفعاليات -->
+            <!-- الفعاليات والأقسام باقية نفسها -->
             <div id="admin-tab-events" class="tab-content">
                 <div class="card">
                     <h3>إضافة فعالية جديدة</h3>
@@ -280,7 +301,6 @@
                 </div>
             </div>
 
-            <!-- الأقسام -->
             <div id="admin-tab-depts" class="tab-content">
                 <div class="card">
                     <h3>إدارة الأقسام / الكليات 🏢</h3>
@@ -305,7 +325,15 @@
 
         db.collection("hall_B_departments").orderBy("timestamp", "asc").onSnapshot(snap => {
             availableDepartments = [];
-            snap.forEach(doc => { availableDepartments.push({ id: doc.id, name: doc.data().name }); });
+            let deptSelect = document.getElementById('pDept');
+            let htmlOptions = '<option value="">-- اختر القسم --</option>';
+            snap.forEach(doc => { 
+                let dName = doc.data().name;
+                availableDepartments.push({ id: doc.id, name: dName }); 
+                htmlOptions += `<option value="${dName}">${dName}</option>`;
+            });
+            if(deptSelect) deptSelect.innerHTML = htmlOptions;
+            if(currentStudentData && currentStudentData.department && deptSelect) deptSelect.value = currentStudentData.department;
         });
 
         function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -316,36 +344,26 @@
             document.getElementById(id).classList.add('active'); btn.classList.add('active'); 
         }
 
-        // --- نظام الطالب ---
+        // --- الطالب ---
         async function processStudent() {
             let nameInput = document.getElementById('fullName').value.trim();
-            if (nameInput.split(' ').filter(w => w.length > 0).length < 2) { Swal.fire('تنبيه', 'اكتب الاسم الثلاثي!', 'warning'); return; }
+            if (nameInput.split(' ').filter(w => w.length > 0).length < 2) { Swal.fire('تنبيه', 'اكتب الاسم الثلاثي أو الثنائي!', 'warning'); return; }
             Swal.fire({ title: 'جاري الدخول...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            
             try {
                 const snapshot = await db.collection("hall_B_students").where("name", "==", nameInput).get();
                 if (!snapshot.empty) {
                     const doc = snapshot.docs[0]; currentStudentId = doc.id; currentStudentData = doc.data();
                     if(!currentStudentData.gownType) { askForGown(doc.id); } else { setupStudentDashboard(); }
                 } else {
-                    Swal.close();
-                    if(availableDepartments.length === 0) { Swal.fire('تنبيه', 'الإدارة لم تضف أي أقسام بعد.', 'info'); return; }
-                    let deptOptions = {}; availableDepartments.forEach(d => { deptOptions[d.name] = d.name; });
-
-                    const { value: selectedDept } = await Swal.fire({
-                        title: 'طالب جديد 👋', text: 'اختر قسمك / كليتك:', input: 'select', inputOptions: deptOptions, inputPlaceholder: 'اختر القسم', showCancelButton: true, confirmButtonText: 'التالي',
-                        inputValidator: (value) => { return new Promise((resolve) => { if (value) resolve(); else resolve('يجب اختيار القسم!'); }); }
+                    const newDoc = await db.collection("hall_B_students").add({
+                        name: nameInput, department: "", avatar: "👨‍🎓", gownType: "", gownSize: "", sashName: "", backSashPhrase: "", capPhrase: "", capPos: "", guestsCount: 0, 
+                        isGownDelivered: false, gownPrice: 0, eventsPrice: 0, totalPrice: 0, paidAmount: 0, payments: [], joinedEvents: [], timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
-
-                    if(selectedDept) {
-                        Swal.fire({ title: 'جاري التسجيل...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                        const newDoc = await db.collection("hall_B_students").add({
-                            name: nameInput, department: selectedDept, avatar: "👨‍🎓", gownType: "", gownSize: "", sashName: "", backSashPhrase: "", capPhrase: "", capPos: "", guestsCount: 0, 
-                            isGownDelivered: false, gownPrice: 0, eventsPrice: 0, totalPrice: 0, paidAmount: 0, payments: [], joinedEvents: [], timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        currentStudentId = newDoc.id; currentStudentData = { name: nameInput, department: selectedDept, avatar: "👨‍🎓", eventsPrice: 0, totalPrice: 0, joinedEvents: [], isGownDelivered: false }; 
-                        askForGown(newDoc.id);
-                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(`👤 طالب جديد (2027)\nالاسم: ${nameInput}\nالقسم: ${selectedDept}`)}`);
-                    }
+                    currentStudentId = newDoc.id; 
+                    currentStudentData = { name: nameInput, department: "", avatar: "👨‍🎓", eventsPrice: 0, totalPrice: 0, joinedEvents: [], isGownDelivered: false }; 
+                    askForGown(newDoc.id);
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(`👤 تسجيل جديد (2027)\nالاسم: ${nameInput}`)}`);
                 }
                 loadEventsForStudent();
             } catch (error) { Swal.fire('خطأ', 'مشكلة بالاتصال.', 'error'); }
@@ -370,19 +388,15 @@
             let d = currentStudentData;
             
             document.getElementById('stNameDisplay').innerText = d.name;
-            document.getElementById('stDeptDisplay').innerText = d.department || "غير محدد";
+            document.getElementById('stDeptDisplay').innerText = d.department || "يرجى التحديد من تبويب المطبعة";
             document.getElementById('stIdDisplay').innerText = currentStudentId.substring(0, 5).toUpperCase();
             document.getElementById('stAvatar').innerText = d.avatar || "👨‍🎓";
             
             document.getElementById('tl-2').classList.toggle('active', !!d.gownType);
             document.getElementById('tl-3').classList.toggle('active', !!d.isGownDelivered);
             
-            // الخوارزمية المصححة للحسابات
-            let total = d.totalPrice || 0; 
-            let ePrice = d.eventsPrice || 0; 
-            let gPrice = total - ePrice; // استخراج سعر الزي الصافي بدون أخطاء تكرار
-            let paid = d.paidAmount || 0; 
-            let remain = total - paid;
+            let total = d.totalPrice || 0; let ePrice = d.eventsPrice || 0; let gPrice = total - ePrice; 
+            let paid = d.paidAmount || 0; let remain = total - paid;
             
             document.getElementById('stGownPrice').innerText = gPrice; document.getElementById('stEventsPrice').innerText = ePrice;
             document.getElementById('stTotal').innerText = total; document.getElementById('stPaid').innerText = paid; document.getElementById('stRemain').innerText = remain;
@@ -394,19 +408,33 @@
             else if(paid > 0) { badge.innerText = "تسديد جزئي"; badge.style.background = "var(--warning)"; clearance.style.display = "none"; }
             else { badge.innerText = "بانتظار التسديد"; badge.style.background = "var(--danger)"; clearance.style.display = "none"; }
             
-            document.getElementById('pSize').value = d.gownSize || ""; 
-            document.getElementById('pSash').value = d.sashName || ""; 
-            document.getElementById('pBackSash').value = d.backSashPhrase || ""; 
-            document.getElementById('pCapPhrase').value = d.capPhrase || ""; 
-            document.getElementById('pGuests').value = d.guestsCount || "";
+            let deptSelect = document.getElementById('pDept'); if(deptSelect && d.department) deptSelect.value = d.department;
+            document.getElementById('pSize').value = d.gownSize || ""; document.getElementById('pSash').value = d.sashName || ""; 
+            document.getElementById('pBackSash').value = d.backSashPhrase || ""; document.getElementById('pCapPhrase').value = d.capPhrase || ""; document.getElementById('pGuests').value = d.guestsCount || "";
             if(d.capPos) { let rad = document.querySelector(`input[name="capPos"][value="${d.capPos}"]`); if(rad) rad.checked = true; }
 
             document.getElementById('qr-box').innerHTML = ""; new QRCode(document.getElementById("qr-box"), { text: currentStudentId, width: 120, height: 120, colorDark : "#134e4a", colorLight : "#ffffff" });
 
+            // شكل وصولات الـ POS
             let receiptsHtml = "";
             if(d.payments && d.payments.length > 0) {
-                d.payments.forEach((p, i) => { receiptsHtml += `<div style="background:#f8f9fa; border-right:4px solid var(--success); padding:10px; margin-bottom:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;"><div><b>وصل #${i+1}</b><br><small>${p.date} | بواسطة: ${p.receiver}</small></div><b style="color:var(--success); font-size:16px;">${p.amount}</b></div>`; });
-            } else { receiptsHtml = `<div style="text-align:center; padding:10px; color:#888; font-size:13px;">لا توجد دفعات.</div>`; }
+                d.payments.forEach((p, i) => { 
+                    receiptsHtml += `
+                    <div class="pos-receipt">
+                        <div class="pos-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>وصل قبض رسمي</h4>
+                        </div>
+                        <div class="pos-row"><span>رقم الوصل:</span><span>#${i+1}</span></div>
+                        <div class="pos-row"><span>تاريخ الدفع:</span><span>${p.date.split(',')[0]}</span></div>
+                        <div class="pos-row"><span>وقت الدفع:</span><span>${p.date.split(',')[1] || ''}</span></div>
+                        <div class="pos-row"><span>أمين الصندوق:</span><span>${p.receiver}</span></div>
+                        <div class="pos-row"><span>طريقة الدفع:</span><span>${p.method}</span></div>
+                        <div class="pos-total">${p.amount} د.ع</div>
+                        <div style="text-align:center; margin-top:10px; font-size:10px; color:#666;">تم استلام المبلغ أعلاه - قاعة B</div>
+                    </div>`; 
+                });
+            } else { receiptsHtml = `<p style="text-align:center; color:#888;">لا توجد دفعات حالياً.</p>`; }
             document.getElementById('receiptsList').innerHTML = receiptsHtml;
         }
 
@@ -443,19 +471,17 @@
 
         async function savePrintDetails() {
             if(!currentStudentId) return;
-            let size = document.getElementById('pSize').value; 
-            let sash = document.getElementById('pSash').value.trim(); 
-            let backSash = document.getElementById('pBackSash').value.trim(); 
-            let guests = parseInt(document.getElementById('pGuests').value) || 0;
-            let phrase = document.getElementById('pCapPhrase').value.trim(); 
-            let capPos = document.querySelector('input[name="capPos"]:checked').value;
+            let dept = document.getElementById('pDept').value; let size = document.getElementById('pSize').value; let sash = document.getElementById('pSash').value.trim(); 
+            let backSash = document.getElementById('pBackSash').value.trim(); let guests = parseInt(document.getElementById('pGuests').value) || 0;
+            let phrase = document.getElementById('pCapPhrase').value.trim(); let capPos = document.querySelector('input[name="capPos"]:checked').value;
 
             if(sash !== "") { let wordCount = sash.split(/\s+/).filter(w => w.length > 0).length; if (wordCount !== 3) { Swal.fire('مرفوض', 'الاسم على الوشاح 3 كلمات فقط.', 'error'); return; } }
             if(phrase !== "" && capPos === "بدون") { Swal.fire('تنبيه', 'يرجى تحديد مكان تطريز عبارة القبعة.', 'warning'); return; }
             if(phrase === "") { capPos = "بدون"; }
 
             Swal.fire({title:'حفظ...', didOpen:()=>Swal.showLoading()});
-            await db.collection("hall_B_students").doc(currentStudentId).update({ gownSize: size, sashName: sash, backSashPhrase: backSash, capPhrase: phrase, capPos: capPos, guestsCount: guests });
+            await db.collection("hall_B_students").doc(currentStudentId).update({ department: dept, gownSize: size, sashName: sash, backSashPhrase: backSash, capPhrase: phrase, capPos: capPos, guestsCount: guests });
+            document.getElementById('stDeptDisplay').innerText = dept || "يرجى التحديد من تبويب المطبعة";
             Swal.fire('تم', 'حفظ البيانات بنجاح', 'success');
         }
 
@@ -489,6 +515,14 @@
             }
         }
 
+        // حذف طالب نهائياً
+        async function deleteStudent(docId, studentName) {
+            if(confirm(`تحذير: هل أنت متأكد من حذف الطالب (${studentName}) وكل حساباته بشكل نهائي؟`)) {
+                await db.collection("hall_B_students").doc(docId).delete();
+                Swal.fire('تم الحذف', 'تم مسح الطالب من النظام.', 'success');
+            }
+        }
+
         function loadAdminData() {
             db.collection("hall_B_students").orderBy("timestamp", "desc").onSnapshot((snap) => {
                 const tbody = document.getElementById("tableBody"); tbody.innerHTML = ""; allData = [];
@@ -500,52 +534,22 @@
                     tPaid += (d.paidAmount || 0); tRemain += remain;
                     
                     let remColor = remain === 0 ? 'var(--success)' : ((d.paidAmount||0) === 0 ? 'var(--danger)' : 'var(--warning)');
-                    let deliverBtn = d.isGownDelivered ? `<button style="background:var(--success); color:white; border:none; padding:3px; border-radius:4px; font-size:10px; display:block; margin:2px auto;" onclick="toggleGown('${doc.id}', false)">مُسلّم✔️</button>` : `<button style="background:#3b82f6; color:white; border:none; padding:3px; border-radius:4px; font-size:10px; display:block; margin:2px auto;" onclick="toggleGown('${doc.id}', true)">تسليم</button>`;
-
+                    
                     allData.push({ "الاسم": d.name, "القسم": d.department||"-", "الزي": d.gownType, "القياس": d.gownSize||"-", "الاسم الأمامي للوشاح": d.sashName||"-", "عبارة ظهر الوشاح": d.backSashPhrase||"-", "عبارة القبعة": d.capPhrase||"-", "مكان العبارة": d.capPos||"-", "الكلي": total, "الواصل": d.paidAmount, "المتبقي": remain, "الضيوف": d.guestsCount||0, "استلم الزي؟": d.isGownDelivered?"نعم":"لا", "الوصولات": d.payments ? d.payments.map(p=>`${p.amount}(${p.receiver})`).join(' | ') : "" });
                     
                     tbody.innerHTML += `<tr>
                         <td><b>${d.name}</b><br><span style="font-size:10px; color:#666;">${d.department||""}</span></td>
                         <td><span class="badge" style="background-color: ${remColor};">${remain}</span></td>
-                        <td>${deliverBtn}</td>
-                        <td><button class="btn-main" style="padding: 4px 8px; font-size:11px;" onclick="openPaymentModal('${doc.id}')">دفع</button></td>
+                        <td style="display:flex; gap:3px; justify-content:center; flex-wrap:wrap; border:none;">
+                            <button class="btn-action btn-pay" onclick="openPaymentModal('${doc.id}')">قبض</button>
+                            <button class="btn-action btn-receipts" onclick="viewAdminReceipts('${doc.id}')">الوصولات</button>
+                            <button class="btn-action btn-delete-st" onclick="deleteStudent('${doc.id}', '${d.name}')"><i class="fas fa-trash"></i></button>
+                        </td>
                     </tr>`;
                 });
                 document.getElementById('statStudents').innerText = tStudents; document.getElementById('statPaid').innerText = tPaid.toLocaleString(); document.getElementById('statRemain').innerText = tRemain.toLocaleString();
             });
         }
-
-        async function toggleGown(docId, state) { await db.collection("hall_B_students").doc(docId).update({ isGownDelivered: state }); }
-
-        async function addDepartment() {
-            let name = document.getElementById('newDeptName').value.trim();
-            if(!name) { Swal.fire('خطأ', 'أدخل اسم القسم', 'error'); return; }
-            Swal.fire({title:'إضافة...', didOpen:()=>Swal.showLoading()});
-            await db.collection("hall_B_departments").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-            document.getElementById('newDeptName').value = ""; Swal.fire('تم', 'أضيف القسم', 'success');
-        }
-        function loadAdminDepts() {
-            db.collection("hall_B_departments").orderBy("timestamp", "asc").onSnapshot(snap => {
-                let html = ""; snap.forEach(doc => { html += `<div style="background:#f9fafb; padding:10px; border:1px solid #e5e7eb; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;"><b>${doc.data().name}</b><button onclick="deleteDept('${doc.id}')" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px;"><i class="fas fa-trash"></i></button></div>`; });
-                document.getElementById('adminDeptsList').innerHTML = html;
-            });
-        }
-        async function deleteDept(id) { if(confirm('متأكد؟')) await db.collection("hall_B_departments").doc(id).delete(); }
-
-        async function publishEvent() {
-            let title = document.getElementById('newEventTitle').value.trim(); let price = parseInt(document.getElementById('newEventPrice').value); let desc = document.getElementById('newEventDesc').value.trim();
-            if(!title || isNaN(price) || price < 0) { Swal.fire('خطأ', 'أدخل بيانات صحيحة', 'error'); return; }
-            Swal.fire({title:'نشر...', didOpen:()=>Swal.showLoading()});
-            await db.collection("hall_B_events").add({ title: title, price: price, desc: desc, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-            document.getElementById('newEventTitle').value = ""; document.getElementById('newEventPrice').value = ""; document.getElementById('newEventDesc').value = ""; Swal.fire('تم', 'نُشرت الفعالية', 'success');
-        }
-        function loadAdminEvents() {
-            db.collection("hall_B_events").orderBy("timestamp", "desc").onSnapshot(snap => {
-                let html = ""; snap.forEach(doc => { html += `<div style="background:#f9fafb; padding:10px; border:1px solid #e5e7eb; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;"><div><b>${doc.data().title}</b> <span style="color:var(--primary); font-size:12px;">(${doc.data().price})</span></div><button onclick="deleteEvent('${doc.id}')" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px;"><i class="fas fa-trash"></i></button></div>`; });
-                document.getElementById('adminEventsList').innerHTML = html;
-            });
-        }
-        async function deleteEvent(id) { if(confirm('متأكد؟')) await db.collection("hall_B_events").doc(id).delete(); }
 
         async function openPaymentModal(docId) {
             Swal.fire({ title: 'تحميل...', didOpen: () => Swal.showLoading() });
@@ -570,6 +574,46 @@
             }
         }
 
+        // عرض وصولات الطالب وحذفها (للأدمن)
+        async function viewAdminReceipts(docId) {
+            Swal.fire({ title: 'تحميل...', didOpen: () => Swal.showLoading() });
+            const docSnap = await db.collection("hall_B_students").doc(docId).get();
+            const data = docSnap.data();
+            let payments = data.payments || [];
+            
+            if(payments.length === 0) { Swal.fire('معلومة', 'الطالب لم يسدد أي دفعة.', 'info'); return; }
+
+            let html = '<div style="text-align:right;">';
+            payments.forEach((p, index) => {
+                html += `<div style="background:#f1f5f9; padding:10px; border-radius:5px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0;">
+                            <div><b style="color:var(--success)">${p.amount}</b> <span style="font-size:11px; color:#666;">(${p.receiver})</span></div>
+                            <button onclick="deleteReceipt('${docId}', ${index}, ${p.amount})" style="background:var(--danger); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">حذف الغلط</button>
+                         </div>`;
+            });
+            html += '</div>';
+
+            Swal.fire({ title: `وصولات ${data.name.split(' ')[0]}`, html: html, showConfirmButton: false, showCloseButton: true });
+        }
+
+        // دالة حذف الوصل (تتصل من داخل الـ Swal)
+        window.deleteReceipt = async function(docId, indexIndex, amountToRemove) {
+            if(confirm('هل أنت متأكد من حذف هذا الوصل؟ سيتم سحب مبلغه من حساب الطالب.')) {
+                const docRef = db.collection("hall_B_students").doc(docId);
+                const docSnap = await docRef.get();
+                let currentPayments = docSnap.data().payments || [];
+                
+                // إزالة الوصل بناءً على ترتيبه (Index)
+                currentPayments.splice(indexIndex, 1);
+                
+                await docRef.update({
+                    payments: currentPayments,
+                    paidAmount: firebase.firestore.FieldValue.increment(-amountToRemove) // ننقص المبلغ من الواصل
+                });
+                
+                Swal.fire('تم الحذف', 'تم تصحيح الحسابات.', 'success');
+            }
+        };
+
         let html5QrcodeScanner;
         function startScanner() {
             document.getElementById('reader').style.display = 'block';
@@ -577,8 +621,37 @@
             html5QrcodeScanner.render(decodedText => { html5QrcodeScanner.clear(); document.getElementById('reader').style.display = 'none'; openPaymentModal(decodedText); }, error => {});
         }
 
+        // إدارة الأقسام والفعاليات (باقية نفسها)
+        async function addDepartment() {
+            let name = document.getElementById('newDeptName').value.trim();
+            if(!name) return;
+            await db.collection("hall_B_departments").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            document.getElementById('newDeptName').value = "";
+        }
+        function loadAdminDepts() {
+            db.collection("hall_B_departments").orderBy("timestamp", "asc").onSnapshot(snap => {
+                let html = ""; snap.forEach(doc => { html += `<div style="background:#f9fafb; padding:10px; border:1px solid #e5e7eb; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;"><b>${doc.data().name}</b><button onclick="deleteDept('${doc.id}')" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px;"><i class="fas fa-trash"></i></button></div>`; });
+                document.getElementById('adminDeptsList').innerHTML = html;
+            });
+        }
+        async function deleteDept(id) { if(confirm('متأكد؟')) await db.collection("hall_B_departments").doc(id).delete(); }
+
+        async function publishEvent() {
+            let title = document.getElementById('newEventTitle').value.trim(); let price = parseInt(document.getElementById('newEventPrice').value); let desc = document.getElementById('newEventDesc').value.trim();
+            if(!title || isNaN(price) || price < 0) return;
+            await db.collection("hall_B_events").add({ title: title, price: price, desc: desc, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            document.getElementById('newEventTitle').value = ""; document.getElementById('newEventPrice').value = ""; document.getElementById('newEventDesc').value = ""; Swal.fire('تم', 'نُشرت الفعالية', 'success');
+        }
+        function loadAdminEvents() {
+            db.collection("hall_B_events").orderBy("timestamp", "desc").onSnapshot(snap => {
+                let html = ""; snap.forEach(doc => { html += `<div style="background:#f9fafb; padding:10px; border:1px solid #e5e7eb; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;"><div><b>${doc.data().title}</b></div><button onclick="deleteEvent('${doc.id}')" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px;"><i class="fas fa-trash"></i></button></div>`; });
+                document.getElementById('adminEventsList').innerHTML = html;
+            });
+        }
+        async function deleteEvent(id) { if(confirm('متأكد؟')) await db.collection("hall_B_events").doc(id).delete(); }
+
         function searchTable() { let input = document.getElementById("searchInput").value.toUpperCase(); let tr = document.getElementById("studentsTable").getElementsByTagName("tr"); for (let i = 1; i < tr.length; i++) { let td = tr[i].getElementsByTagName("td")[0]; if (td) { tr[i].style.display = td.textContent.toUpperCase().indexOf(input) > -1 ? "" : "none"; } } }
-        function exportExcel() { const ws = XLSX.utils.json_to_sheet(allData); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "البيانات"); XLSX.writeFile(wb, "ملف_المطبعة_و_الادارة.xlsx"); }
+        function exportExcel() { const ws = XLSX.utils.json_to_sheet(allData); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "البيانات"); XLSX.writeFile(wb, "ملف_الإدارة_الشامل_V8.xlsx"); }
     </script>
 </body>
 </html>
